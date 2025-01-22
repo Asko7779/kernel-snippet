@@ -1,15 +1,17 @@
+// attempt of a kernel i didnt finish and will use for testing later, pretty retarded
+
 #include <stdint.h>
 #include <cstring>
 
-constexpr uintptr_t VGA_A = 0xB8000;
-constexpr uint8_t BG = 0x0F;
-constexpr int SCREEN_W = 80;
-constexpr int SCREEN_H = 25;
+constexpr uintptr_t VGA_A = 0xB8000;        // vga addr
+constexpr uint8_t BG = 0x0F;                // background (white on black)
+constexpr int SCREEN_W = 80;                // screen width
+constexpr int SCREEN_H = 25;                // screen height
 
 class VGA {
 public:
     volatile uint16_t *vga_buffer;
-
+    // had a stroke doing this
     VGA() : vga_buffer(reinterpret_cast<uint16_t*>(VGA_A)) {}
     void outputChar(char c, int col, int row, uint8_t attr) {
         int offset = row * SCREEN_W + col;
@@ -55,7 +57,7 @@ extern "C" [[noreturn]] void main() {
     int cursorY = 3;
     vga.moveCursor(cursorX, cursorY);
     char inputBuffer[80];
-    int inputIndex = 0;
+    int inputIndex = 0;        // lost it here, are very chaotic
     while (true) {
         uint8_t key = inb(0x60);
         if (key == 0x0E && inputIndex > 0) {
