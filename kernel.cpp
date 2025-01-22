@@ -1,5 +1,7 @@
 // attempt of a kernel i didnt finish and will use for testing later, pretty retarded
 
+// some assembly files are required for this to work too, but who needs that anyways
+
 #include <stdint.h>
 #include <cstring>
 
@@ -17,7 +19,7 @@ public:
         int offset = row * SCREEN_W + col;
         vga_buffer[offset] = (attr << 8) | c;
     }
-    void outputString(const char* str, int col, int row, uint8_t attr) {
+    void outputString(const char* str, int col, int row, uint8_t attr) {    // attempt of VGA "printing" and character output
         int offset = row * SCREEN_W + col;
         for (int i = 0; str[i] != '\0'; i++) {
             vga_buffer[offset + i] = (attr << 8) | str[i];
@@ -28,6 +30,9 @@ public:
             outputChar(' ', col, row, attr);
         }
     }
+
+    // keyboard input attempt
+
     void moveCursor(int col, int row) {
         uint16_t cursorPos = row * SCREEN_W + col;
         outb(0x3D4, 0x0E);
@@ -40,11 +45,12 @@ void outb(uint16_t port, uint8_t value) {
     asm volatile("outb %0, %1" : : "a"(value), "Nd"(port));
 }
 
-uint8_t inb(uint16_t port) {
+uint8_t inb(uint16_t port) {    
     uint8_t value;
     asm volatile("inb %1, %0" : "=a"(value) : "Nd"(port));
     return value;
 }
+
 
 
 extern "C" [[noreturn]] void main() {
