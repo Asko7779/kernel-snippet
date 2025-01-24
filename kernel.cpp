@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <cstring>
 
-constexpr uintptr_t VGA_A = 0xB8000;        // vga addr
+constexpr uintptr_t VGA_A = 0xB8000;        // vga address
 constexpr uint8_t BG = 0x0F;                // background (white on black)
 constexpr int SCREEN_W = 80;                // screen width
 constexpr int SCREEN_H = 25;                // screen height
