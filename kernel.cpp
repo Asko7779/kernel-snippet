@@ -51,7 +51,6 @@ uint8_t inb(uint16_t port) {
 }
 
 
-
 extern "C" [[noreturn]] void main() {
     VGA vga;
     vga.clearLine(0, BG);
